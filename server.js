@@ -132,10 +132,11 @@ app.post('/api/status', (req, res) => {
 app.post('/api/attendance', async (req, res) => {
   const b = req.body || {};
   const name = String(b.name || '').trim().replace(/\s+/g, ' ');
-  const { domain, role, lat, lng, accuracy, descriptors, enrollCode, consent } = b;
+    const { role, lat, lng, accuracy, descriptors, enrollCode, consent } = b;
+  const domain = b.domain || 'Not specified';
 
   if (!NAME_RE.test(name)) return res.status(400).json({ error: 'BAD_NAME', message: 'Enter your full name (letters only).' });
-  if (!DOMAINS.includes(domain)) return res.status(400).json({ error: 'BAD_DOMAIN', message: 'Choose your domain.' });
+    if (domain !== 'Not specified' && !DOMAINS.includes(domain)) return res.status(400).json({ error: 'BAD_DOMAIN', message: 'Choose your domain.' });
   if (!ROLES.includes(role)) return res.status(400).json({ error: 'BAD_ROLE', message: 'Choose your position.' });
   if (!validDescriptors(descriptors, 1, 5)) return res.status(400).json({ error: 'BAD_FACE', message: 'Face scan was invalid. Scan again.' });
 
