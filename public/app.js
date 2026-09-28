@@ -44,7 +44,7 @@
   });
   const detailsValid = () => {
     const v = val();
-    return NAME_RE.test(v.name) && v.domain && v.role;
+        return NAME_RE.test(v.name) && v.role;
   };
 
   function refresh() {
