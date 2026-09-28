@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mark attendance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="shell">
+  <header>
+    <h1 id="club-name">Attendance</h1>
+    <p class="lede">Three checks, about 30 seconds: your details, your location, your face.</p>
+  </header>
+
+  <div id="flow">
+    <section class="step" id="step-details" data-state="idle">
+      <div class="badge" aria-hidden="true"><span>1</span></div>
+      <div class="body">
+        <h2>Your details</h2>
+        <label for="name">Full name</label>
+        <input id="name" type="text" autocomplete="name" autocapitalize="words" maxlength="60" placeholder="As registered with the club">
+
+        <label for="domain">Domain</label>
+        <select id="domain"><option value="">Choose your domain</option></select>
+
+        <label for="role">Position</label>
+        <select id="role"><option value="">Choose your position</option></select>
+
+        <div id="enroll-box" hidden>
+          <p class="note" data-tone="info">First time here. Your face will be registered when you submit.</p>
+          <label for="enroll-code">Club enrollment code</label>
+          <input id="enroll-code" type="password" autocomplete="off" placeholder="Ask a club head">
+          <label class="check">
+            <input id="consent" type="checkbox">
+            <span>I agree to the club storing an encrypted face template to verify my attendance.</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="step" id="step-location" data-state="idle">
+      <div class="badge" aria-hidden="true"><span>2</span></div>
+      <div class="body">
+        <h2>Your location</h2>
+        <p class="hint">You need to be at the venue. Allow location when your browser asks.</p>
+        <button type="button" class="btn secondary" id="btn-loc">Check my location</button>
+        <p class="note" id="loc-note" role="status" aria-live="polite" hidden></p>
+      </div>
+    </section>
+
+    <section class="step" id="step-face" data-state="idle">
+      <div class="badge" aria-hidden="true"><span>3</span></div>
+      <div class="body">
+        <h2>Your face</h2>
+        <div class="cam" id="cam" hidden>
+          <video id="video" playsinline muted></video>
+          <div class="guide" aria-hidden="true"></div>
+        </div>
+        <div class="row">
+          <button type="button" class="btn secondary" id="btn-cam">Start camera</button>
+          <button type="button" class="btn secondary" id="btn-scan" disabled>Scan my face</button>
+        </div>
+        <p class="note" id="face-note" role="status" aria-live="polite">Loading face models…</p>
+      </div>
+    </section>
+  </div>
+
+  <button type="button" class="btn primary" id="btn-submit" disabled>Mark attendance</button>
+  <p class="note" id="submit-note" role="status" aria-live="polite" hidden></p>
+
+  <section class="done" id="done" hidden>
+    <h2 id="done-title">Attendance marked</h2>
+    <dl>
+      <dt>Name</dt><dd id="done-name"></dd>
+      <dt>Time</dt><dd id="done-time"></dd>
+      <dt>Status</dt><dd id="done-status"></dd>
+    </dl>
+  </section>
+</main>
+
+<canvas id="probe" width="64" height="48" hidden></canvas>
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/dist/face-api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
